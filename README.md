@@ -13,5 +13,4 @@ Authorized users are able to consume prepared chains by subscribing to the Teleg
 
 Telegram channels notification can be configured by specifying filters which are supposed to be applied to the resulted chains.
 
-![img_1.png](img_1.png)
-
+![img.png](img.png)
