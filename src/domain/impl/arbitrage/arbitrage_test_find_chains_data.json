@@ -1,0 +1,327 @@
+[
+  {
+    "name": "when one bid no profitable chains",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.15
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": []
+  },
+  {
+    "name": "when multiple bids no proper chains",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.1,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C3",
+        "rate": 1.1,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r3",
+        "src": "C3",
+        "trg": "C4",
+        "rate": 1.1,
+        "available": 10.0,
+        "minLimit": 0.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": []
+  },
+  {
+    "name": "when two bids profitable chain",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 0.98,
+        "available": 10.0,
+        "minLimit": 0.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": [
+      "r1->r2->"
+    ]
+  },
+  {
+    "name": "when chain without positive profit",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 0.9,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 0.98,
+        "available": 10.0,
+        "minLimit": 0.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": []
+  },
+  {
+    "name": "when multiple bids two profitable chains",
+    "bids": [
+      {
+        "id": "r0",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C3",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r3",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r4",
+        "src": "C2",
+        "trg": "C3",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": [
+      "r0->r2->",
+      "r0->r3->"
+    ]
+  },
+  {
+    "name": "when no chains due to limits",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.1,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 0.9,
+        "available": 10.0,
+        "minLimit": 100.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": []
+  },
+  {
+    "name": "when chain with limit",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 0.98,
+        "available": 10.0,
+        "minLimit": 10.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": [
+      "r1->r2->"
+    ]
+  },
+  {
+    "name": "when multiple bids two profitable chains with limit",
+    "bids": [
+      {
+        "id": "r0",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 10.0
+      },
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C3",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 10.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 30.0
+      },
+      {
+        "id": "r3",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 10.0
+      },
+      {
+        "id": "r4",
+        "src": "C2",
+        "trg": "C3",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 10.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": [
+      "r0->r3->"
+    ]
+  },
+  {
+    "name": "when profit less than min",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.0001,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C1",
+        "rate": 0.99999,
+        "available": 10.0,
+        "minLimit": 10.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": []
+  },
+  {
+    "name": "when max depth exceeded",
+    "bids": [
+      {
+        "id": "r1",
+        "src": "C1",
+        "trg": "C2",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r2",
+        "src": "C2",
+        "trg": "C3",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r3",
+        "src": "C3",
+        "trg": "C4",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r4",
+        "src": "C4",
+        "trg": "C5",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r5",
+        "src": "C5",
+        "trg": "C6",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r6",
+        "src": "C6",
+        "trg": "C7",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      },
+      {
+        "id": "r7",
+        "src": "C7",
+        "trg": "C1",
+        "rate": 1.15,
+        "available": 10.0,
+        "minLimit": 0.0
+      }
+    ],
+    "asset": "C1",
+    "expectedChains": []
+  }
+]

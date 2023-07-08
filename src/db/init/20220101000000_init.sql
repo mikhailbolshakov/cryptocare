@@ -1,0 +1,8 @@
+-- +goose Up
+CREATE ROLE trading LOGIN PASSWORD 'trading' NOINHERIT CREATEDB;
+CREATE SCHEMA trading AUTHORIZATION trading;
+GRANT USAGE ON SCHEMA trading TO PUBLIC;
+
+-- +goose Down
+DROP SCHEMA trading;
+DROP ROLE trading;

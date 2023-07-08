@@ -1,0 +1,8 @@
+bin
+.env
+.env-docker
+.idea
+.testCoverage.txt
+log
+profitable_chains
+.idea

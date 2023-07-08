@@ -1,0 +1,60 @@
+image: docker:dind
+
+variables:
+  CRYPTOCAREP2P_DOCKER_IMAGE: gitlab.secreate.dev:5050/devteam/cryptocarep2p/docker:master1.0.0
+  DEV_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG-$CI_COMMIT_SHORT_SHA
+
+stages:
+  - UnitTesting
+  - build
+  - deploy
+
+##########################################################
+### DEV
+##########################################################
+UnitTesting:
+  stage: UnitTesting
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  image: $CRYPTOCAREP2P_DOCKER_IMAGE
+  script:
+    - ls -la && pwd
+    - make ci-build
+  tags:
+    - docker
+  only:
+    - master
+
+build_dev:
+  stage: build
+  before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo $CRYPTOCAREP2P_DOCKER_IMAGE
+    - sed -i "s|FROM IMAGE|FROM\ $CRYPTOCAREP2P_DOCKER_IMAGE|" Dockerfile
+    - docker build --pull -t $DEV_IMAGE .
+    - docker push $DEV_IMAGE
+  tags:
+    - docker
+  only:
+    - master
+
+deploy_dev:
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o StrictHostKeyChecking=no ubuntu@10.15.110.210
+      "set -a;
+      export DEV_IMAGE=$DEV_IMAGE;
+      docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+      docker-compose -f ~/deploy-trading/docker-compose.yml down --rmi trading;
+      docker-compose -f ~/deploy-trading/docker-compose.yml up -d trading;
+      docker image prune -f"        
+  tags:
+    - docker
+  only:
+    - master

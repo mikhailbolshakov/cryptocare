@@ -1,0 +1,107 @@
+# http server configuration
+http:
+  # listens on port
+  port: ${HTTP_PORT|8017}
+  cors:
+    allowedHeaders:
+      - "*"
+    allowedOrigins:
+      - "*"
+    allowedMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - OPTIONS
+    debug: ${HTTP_CORS_DEBUG_ENABLED|false}
+  # trace requests/responses
+  trace: ${HTTP_TRACE_ENABLED|false}
+  # http server write timeout
+  write-timeout-sec: ${HTTP_WRITE_TIMEOUT_SEC|10}
+  # http read write timeout
+  read-timeout-sec: ${HTTP_READ_TIMEOUT_SEC|10}
+  # http server write buffer size
+  write-buffer-size-bytes: ${HTTP_WRITE_BUFFER_SIZE_BYTES|1024}
+  # http server read buffer size
+  read-buffer-size-bytes: ${HTTP_READ_BUFFER_SIZE_BYTES|1024}
+
+# logging configuration
+log:
+  # level
+  level: ${TRADING_LOG_LEVEL|trace}
+  # output format (plain, json)
+  format: ${TRADING_LOG_FORMAT|plain}
+  # if true, outputs context info
+  context: ${TRADING_LOG_CONTEXT|true}
+  # if true, outputs running service instance info
+  service: ${TRADING_LOG_SERVICE|true}
+
+# storage configurations
+storages:
+  # aerospike
+  aero:
+    host: ${AERO_HOST|localhost}
+    port: ${AERO_PORT|3000}
+    namespace: "cryptocare"
+  # pg client
+  pg:
+    # local path to migration folder
+    mig-path: ${CRYPTOCAREROOT|}/trading/src/db/migrations
+    # db master config
+    master:
+      # database name
+      dbname: ${TRADING_DB_MASTER_NAME|cryptocare}
+      # db username
+      user: trading
+      # db password
+      password: ${TRADING_DB_MASTER_PASSWORD|trading}
+      # db port
+      port: ${TRADING_DB_MASTER_PORT|15432}
+      # host for master (read-write) database
+      host: ${TRADING_DB_MASTER_HOST|localhost}
+
+# authentication configuration
+auth:
+  # access token
+  access-token:
+    # secret
+    secret: ${AUTH_ACCESS_TOKEN_SECRET|}
+    # expiration period in seconds
+    expiration-period-sec: ${AUTH_ACCESS_TOKEN_EXPIRATION_SEC|9000}
+  # refresh token
+  refresh-token:
+    # secret
+    secret: ${AUTH_REFRESH_TOKEN_SECRET|}
+    # expiration period in seconds
+    expiration-period-sec: ${AUTH_REFRESH_TOKEN_EXPIRATION_SEC|604800}
+
+# development mode
+dev:
+  enabled: ${DEV_MODE|false}
+  bid-gen-period-sec: ${DEV_BID_GEN_PERIOD_SEC|10}
+  bid-gen-bids-count: ${DEV_BID_GEN_BIDS_COUNT|100}
+
+# arbitrage config params
+arbitrage:
+  # assets. comma separated list of assets to calculate chains.
+  # if not specified, chains are calculated for all available assets
+  assets: ${ARBITRAGE_ASSETS|RUB,USD,EUR}
+  # max depth of profitable chains
+  depth: ${ARBITRAGE_DEPTH|3}
+  # period in sec workers get assets and start searching chains
+  process-assets-period-sec: ${ARBITRAGE_PROCESS_ASSETS_PERIOD_SEC|30}
+  # period in sec bid provider retrieve bids from the storage
+  bid-provider-period-sec: ${ARBITRAGE_BID_PROVIDER_PERIOD_SEC|60}
+  # if limits are checked when finding chains
+  check-limit: ${ARBITRAGE_CHECK_LIMIT|true}
+  # minimal amount of profit share
+  min-profit: ${ARBITRAGE_MIN_PROFIT|1.005}
+  # notification
+  notification:
+    # telegram notification details
+    telegram:
+      # bot id
+      bot: ${TELEGRAM_BOT|}
+      # test channel (used for tests)
+      # channel: ${TELEGRAM_CHANNEL|}
+

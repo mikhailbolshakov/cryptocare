@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+
+  aerospike:
+    container_name: cc-aerospike
+    networks:
+      - cc
+    image: aerospike/aerospike-server
+    expose:
+      - 3000
+      - 3001
+      - 3002
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+    environment:
+      - NAMESPACE=cryptocare
+    volumes:
+      - /var/cryptocare/docker/volumes/aerospike/data:/opt/aerospike/data
+      - /var/cryptocare/docker/volumes/aerospike/etc:/opt/aerospike/etc
+
+  pg:
+    container_name: cc-pg
+    networks:
+      - cc
+    build:
+      context: ./infra/pg
+    read_only: true
+    ports:
+      - "15432:5432"
+    volumes:
+      - /var/cryptocare/docker/volumes/pg/data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=cryptocare
+
+networks:
+  cc:
+    external: true
