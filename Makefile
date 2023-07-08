@@ -13,11 +13,9 @@ SERVICE = trading
 # current version
 DOCKER_TAG ?= latest
 # docker registry url
-DOCKER_URL = gitlab.secreate.dev/cryptocare
+DOCKER_URL = cryptocare.io/cryptocare
 
 # database migrations
-DB_ADMIN_USER ?= admin
-DB_ADMIN_PASSWORD ?= admin
 DB_HOST ?= localhost
 DB_NAME ?= cryptocare
 DB_AUTH_USER ?= $(SERVICE)
@@ -172,11 +170,6 @@ docker-push-test: docker-build-test ## Build and push docker images to the repos
 docker-run:
 	@echo Running container
 	docker run $(DOCKER_URL)/$(SERVICE):$(DOCKER_TAG)
-
-# dev environment ======================================================================================================================
-
-ssh-dev:
-	ssh ubuntu@88.99.88.38 -p 5022
 
 # Swagger commands =======================================================================================================
 

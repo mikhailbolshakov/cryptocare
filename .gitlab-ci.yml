@@ -1,9 +1,5 @@
 image: docker:dind
 
-variables:
-  CRYPTOCAREP2P_DOCKER_IMAGE: gitlab.secreate.dev:5050/devteam/cryptocarep2p/docker:master1.0.0
-  DEV_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_SLUG-$CI_COMMIT_SHORT_SHA
-
 stages:
   - UnitTesting
   - build
