@@ -7,7 +7,7 @@ This service consumes P2P orders preliminary uploaded from a lot of crypto excha
 ````
 USDT -> BTC
 BTC  -> ETH
-ETH  -> BTC
+ETH  -> USDT
 ````
 Authorized users are able to consume prepared chains by subscribing to the Telegram channels.
 
